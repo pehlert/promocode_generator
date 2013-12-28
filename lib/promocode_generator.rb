@@ -1,5 +1,6 @@
 require "promocode_generator/version"
 require "promocode_generator/model_additions"
+require "promocode_generator/railtie" if defined? Rails
 
 module PromocodeGenerator
   # Generates an 8 character random code of uppercase letters and numbers
