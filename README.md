@@ -1,12 +1,12 @@
-# Promocode
+# Promocode Generator
 
-TODO: Write a gem description
+Generates save and unique (when used with AR) codes which can be handed to customers for promotional campaigns.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'promocode'
+    gem 'promocode_generator'
 
 And then execute:
 
@@ -14,11 +14,26 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install promocode
+    $ gem install promocode_generator
 
 ## Usage
 
-TODO: Write usage instructions here
+Without Rails:
+  
+  Use PromocodeGenerator.generate(length) to produce a promotional code of the desired length.
+
+With Rails:
+
+  In your model, use the promocode_attribute method to automatically generate a promotional code of length 8 in the before_save hook:
+  
+  ```ruby
+  class Campaign < ActiveRecord::Base
+    promocode_attribute :code
+  end
+  ```
+  
+  Basic uniqueness validation comes by default so that codes are generated until a non-existing code is found in the db. Provide the :reject_if option to customize:
+  `promocode_attribute :code, :reject_if => Proc.new { |code| ModelA.where(:code => code).any? }`
 
 ## Contributing
 

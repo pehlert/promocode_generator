@@ -1,1 +1,2 @@
-require 'promocode'
+require 'promocode_generator'
+require 'supermodel'
