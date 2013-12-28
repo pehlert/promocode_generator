@@ -3,7 +3,7 @@ module PromocodeGenerator
     def promocode_attribute(attribute, options = {})
       options[:reject_if] ||= Proc.new { |code| self.where(attribute => code).any? }
 
-      before_save do
+      before_create do
         # Make sure not to generate the same code twice!
         begin
           self.code = PromocodeGenerator.generate

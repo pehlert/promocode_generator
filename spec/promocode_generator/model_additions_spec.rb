@@ -16,7 +16,7 @@ end
 describe PromocodeGenerator::ModelAdditions do
   let(:campaign) { Campaign.new(:name => "foo") }
 
-  context "when the model is saved" do
+  context "when a new model is saved" do
     it "generates a code" do
       expect(PromocodeGenerator).to receive(:generate).once.and_return('ABCDEFG')
       campaign.save!
@@ -25,6 +25,16 @@ describe PromocodeGenerator::ModelAdditions do
     it "assigns the code to the model" do
       campaign.save!
       expect(campaign.code).not_to be_nil
+    end
+  end
+
+  context "when an existing model is saved" do
+    it "does not touch the code" do
+      campaign.save!
+      code = campaign.code
+      
+      campaign.name = "blubb"
+      expect { campaign.save! }.not_to change { campaign.code }
     end
   end
 

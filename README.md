@@ -24,7 +24,7 @@ Without Rails:
 
 With Rails:
 
-  In your model, use the promocode_attribute method to automatically generate a promotional code of length 8 in the before_save hook:
+  In your model, use the promocode_attribute method to automatically generate a promotional code of length 8 in the before_create hook:
   
   ```ruby
   class Campaign < ActiveRecord::Base
