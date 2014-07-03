@@ -3,14 +3,14 @@ require 'spec_helper'
 # Dummy reject condition that can be stubbed in the tests below
 module RejectCondition
   def self.check(code)
-    false 
+    false
   end
 end
 
 class Campaign < SuperModel::Base
   include ActiveModel::Validations::Callbacks
   extend PromocodeGenerator::ModelAdditions
-  promocode_attribute :code, :reject_if => Proc.new { |code| RejectCondition.check(code) }
+  promocode_attribute :my_code, :reject_if => Proc.new { |code| RejectCondition.check(code) }
 end
 
 describe PromocodeGenerator::ModelAdditions do
@@ -24,17 +24,17 @@ describe PromocodeGenerator::ModelAdditions do
 
     it "assigns the code to the model" do
       campaign.save!
-      expect(campaign.code).not_to be_nil
+      expect(campaign.my_code).not_to be_nil
     end
   end
 
   context "when an existing model is saved" do
     it "does not touch the code" do
       campaign.save!
-      code = campaign.code
-      
+      code = campaign.my_code
+
       campaign.name = "blubb"
-      expect { campaign.save! }.not_to change { campaign.code }
+      expect { campaign.save! }.not_to change { campaign.my_code }
     end
   end
 

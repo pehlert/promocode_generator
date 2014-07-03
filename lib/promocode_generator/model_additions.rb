@@ -6,9 +6,9 @@ module PromocodeGenerator
       before_create do
         # Make sure not to generate the same code twice!
         begin
-          self.code = PromocodeGenerator.generate
-        end while options[:reject_if].call(code)
-      end 
+          self.send("#{attribute}=", PromocodeGenerator.generate)
+        end while options[:reject_if].call(self.send(attribute))
+      end
     end
   end
 end
